@@ -15,11 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="iluminacion2.cpp">
-      <Filter>Archivos de origen</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="Model.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -43,5 +38,10 @@
     <None Include="Shaders\lighting.vs">
       <Filter>Archivos de origen</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="ProyectoFinal.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -120,7 +120,7 @@ int main()
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);*/
 
 	// Create a GLFWwindow object that we can use for GLFW's functions
-	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Iluminacion 2 jejejejej", nullptr, nullptr);
+	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Proyecto Final", nullptr, nullptr);
 
 	if (nullptr == window)
 	{
@@ -160,7 +160,9 @@ int main()
 
 	Model Suelo((char*)"Models/Escena/suelo.obj");
 	Model Edificio((char*)"Models/Escena/edificioTexturizadoV2.obj");
-
+	Model PlantaEnergia((char*)"Models/PlantaEnergia/plantaEnergia.obj");
+	Model TanqueOxigeno((char*)"Models/TanqueOxigeno/tanqueOxigeno.obj");
+	Model TanqueOxigeno1((char*)"Models/TanqueOxigeno/tanqueOxigeno1.obj");
 
 	// First, set the container's VAO (and VBO)
 	GLuint VBO, VAO;
@@ -282,10 +284,22 @@ int main()
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
 		Edificio.Draw(lightingShader);
+		
+		// objetos
+		model = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
+		PlantaEnergia.Draw(lightingShader);
 
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//Esfera.Draw(lightingShader);
-		//Box.Draw(lightingShader);
+		model = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
+		TanqueOxigeno.Draw(lightingShader);
+		
+		model = glm::mat4(1);
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
+		TanqueOxigeno1.Draw(lightingShader);
 
 
 
