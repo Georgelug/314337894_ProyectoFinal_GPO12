@@ -1,6 +1,6 @@
 #version 330 core
 
-#define NUMBER_OF_POINT_LIGHTS 4 // se define un numero de luces puntuales
+#define NUMBER_OF_POINT_LIGHTS 0 // se define un numero de luces puntuales
 
 // El material 
 // se define por una componente difusa la cual sera determinada por la textura, 
