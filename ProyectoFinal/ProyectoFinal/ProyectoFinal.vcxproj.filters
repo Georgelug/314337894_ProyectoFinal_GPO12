@@ -15,8 +15,33 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="314337894_REPORTE8_GPO12.cpp">
+    <ClCompile Include="iluminacion2.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Model.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Shaders\lamp.frag">
+      <Filter>Archivos de origen</Filter>
+    </None>
+    <None Include="Shaders\lamp.vs">
+      <Filter>Archivos de origen</Filter>
+    </None>
+    <None Include="Shaders\lighting.frag">
+      <Filter>Archivos de origen</Filter>
+    </None>
+    <None Include="Shaders\lighting.vs">
+      <Filter>Archivos de origen</Filter>
+    </None>
   </ItemGroup>
 </Project>

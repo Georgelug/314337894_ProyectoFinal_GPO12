@@ -105,7 +105,7 @@ int main()
 
     // Load models
     // pokebola con mejor presupuesto
-    Model plantaEnergia((char*)"Models/PlantaEnergia/plantaEnergia.obj");
+    Model Edificio((char*)"Models/edificioTexturizadoV2.fbm/edificioTexturizadoV2.obj");
     /*Model pokeabajo((char*)"Models/Pokeball2/pokeabajo.obj");
     Model centro((char*)"Models/Pokeball2/centro.obj");
     Model cuerpo((char*)"Models/Pokeball2/centrocuerpo.obj");*/
@@ -246,7 +246,7 @@ int main()
         glUniformMatrix4fv(glGetUniformLocation(lightingShader.Program, "model"), 1, GL_FALSE, glm::value_ptr(model));
         glBindVertexArray(VAO);
         //glDrawArrays(GL_TRIANGLES, 0, 36);
-        plantaEnergia.Draw(lightingShader);
+        Edificio.Draw(lightingShader);
 
 
         /*glUniform3f(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 1.0f, 1.0f, 1.0f);
