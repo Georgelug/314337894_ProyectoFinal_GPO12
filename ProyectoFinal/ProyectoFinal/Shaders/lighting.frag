@@ -97,13 +97,13 @@ void main( )
     vec3 result = CalcDirLight( dirLight, norm, viewDir );
     
     // Point lights
-    for ( int i = 0; i < NUMBER_OF_POINT_LIGHTS; i++ )
-    {
-        result += CalcPointLight( pointLights[i], norm, FragPos, viewDir );
-    }
+    //for ( int i = 0; i < NUMBER_OF_POINT_LIGHTS; i++ )
+    //{
+       // result += CalcPointLight( pointLights[i], norm, FragPos, viewDir );
+    //}
     
     // Spot light
-    result += CalcSpotLight( spotLight, norm, FragPos, viewDir );
+    //result += CalcSpotLight( spotLight, norm, FragPos, viewDir );
  	
     color = colorAlpha*vec4( result,texture(material.diffuse, TexCoords).rgb );
 	  if(color.a < 0.1 && activaTransparencia == 1)

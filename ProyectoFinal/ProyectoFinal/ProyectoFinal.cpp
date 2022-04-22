@@ -275,10 +275,10 @@ int main()
 		view = camera.GetViewMatrix();
 
 		// Escena
-		model = glm::mat4(1);
+		/*model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
-		Suelo.Draw(lightingShader);
+		Suelo.Draw(lightingShader);*/
 
 		model = glm::mat4(1);
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
