@@ -76,8 +76,8 @@ out vec4 color;
 
 uniform vec3 viewPos; // posicion de la vista
 uniform DirLight dirLight; // la direccion de la luz
-uniform PointLight pointLights[NUMBER_OF_POINT_LIGHTS]; // un arreglo de pointlights, el cual sera de tamaño 4
-uniform SpotLight spotLight; // una spotlight
+// uniform PointLight pointLights[NUMBER_OF_POINT_LIGHTS]; // un arreglo de pointlights, el cual sera de tamaño 4
+// uniform SpotLight spotLight; // una spotlight
 uniform Material material; // y un material
 uniform int activaTransparencia;
 uniform vec4 colorAlpha;
