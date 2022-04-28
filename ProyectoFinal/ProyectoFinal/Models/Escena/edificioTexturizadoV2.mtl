@@ -1,5 +1,5 @@
-# Blender MTL File: 'edificioTexturizadoV2.blend'
-# Material Count: 97
+# Blender MTL File: 'edificioTexturizadoV3.blend'
+# Material Count: 92
 
 newmtl Chalet
 Ns 225.000000
@@ -11,6 +11,17 @@ Ni 1.450000
 d 1.000000
 illum 2
 map_Kd TexturesCom_Parquet_M.png
+
+newmtl Chalet.001
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:\\Users\\PC\\Desktop\\8voSemestre\\Computacion grafica\\lab\\ProyectoFinal\\314337894_ProyectoFinal_GPO12\\Downloads\\TexturesCom_Parquet_M.png
 
 newmtl Material.003
 Ns 225.000000
@@ -46,17 +57,6 @@ illum 2
 map_Kd BricksFlemishRed001_COL_VAR1_3K.png
 
 newmtl Material.006
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd BricksFlemishRed001_COL_VAR1_3K.png
-
-newmtl Material.008
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -276,17 +276,6 @@ d 1.000000
 illum 2
 map_Kd TexturesCom_Parquet_M.png
 
-newmtl Material.032
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd TexturesCom_Parquet_M.png
-
 newmtl Material.036
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
@@ -396,17 +385,6 @@ Ni 1.450000
 d 1.000000
 illum 2
 map_Kd TexturesCom_Trainstationwall-Grungefromdirtyshoes_M.png
-
-newmtl Material.060
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd TexturesCom_Parquet_M.png
 
 newmtl Material.061
 Ns 225.000000
@@ -914,28 +892,6 @@ d 1.000000
 illum 2
 map_Kd BricksFlemishRed001_COL_VAR1_3K.png
 
-newmtl Material.122
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd escalera.png
-
-newmtl Material.123
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd escalera.png
-
 newmtl Material.124
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
@@ -959,17 +915,6 @@ illum 2
 map_Kd BricksFlemishRed001_COL_VAR1_3K.png
 
 newmtl Material.132
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd BricksFlemishRed001_COL_VAR1_3K.png
-
-newmtl Material.133
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000

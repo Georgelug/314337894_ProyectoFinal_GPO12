@@ -1,7 +1,7 @@
-# Blender MTL File: 'edificioTexturizadoV2.blend'
+# Blender MTL File: 'edificioTexturizadoV3.blend'
 # Material Count: 3
 
-newmtl lambert2SG.002
+newmtl lambert2SG.001
 Ns 0.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.000000 0.000000 0.000000
@@ -12,7 +12,7 @@ d 1.000000
 illum 1
 map_Kd cooperTexture.jpg
 
-newmtl lambert3SG.001
+newmtl lambert3SG
 Ns 0.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.000000 0.000000 0.000000
@@ -23,7 +23,7 @@ d 1.000000
 illum 1
 map_Kd verdeMetal.jpg
 
-newmtl tanque:None.001
+newmtl tanque:None
 Ns 500.000001
 Ka 0.800000 0.800000 0.800000
 Kd 0.800000 0.800000 0.800000

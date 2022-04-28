@@ -154,15 +154,33 @@ int main()
 	glViewport(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 
-
+	//#### Shaders ####
 	Shader lightingShader("Shaders/lighting.vs", "Shaders/lighting.frag");
 	Shader lampShader("Shaders/lamp.vs", "Shaders/lamp.frag");
+	Shader Anim("Shaders/anim.vs", "Shaders/anim.frag");
+	Shader Anim2("Shaders/anim2.vs", "Shaders/anim2.frag");
 
-	Model Suelo((char*)"Models/Escena/suelo.obj");
+	//#### Modelos #####
+	// Edificio
 	Model Edificio((char*)"Models/Escena/edificioTexturizadoV2.obj");
-	Model PlantaEnergia((char*)"Models/PlantaEnergia/plantaEnergia.obj");
-	Model TanqueOxigeno((char*)"Models/TanqueOxigeno/tanqueOxigeno.obj");
-	Model TanqueOxigeno1((char*)"Models/TanqueOxigeno/tanqueOxigeno1.obj");
+
+	// Exterior
+	Model Suelo((char*)"Models/Escena/suelo.obj");
+	Model Mar((char*)"Models/Escena/Mar.obj"); // animacion
+	Model Estanques((char*)"Models/Escena/Estanques.obj"); // animacion
+	Model icebergs((char*)"Models/Escena/icebergs.obj"); // animacion
+	Model Snowman((char*)"Models/Escena/Snowman.obj"); 
+	Model penguin((char*)"Models/Escena/Penguin/p1.obj"); // animacion compleja
+	Model penguin1((char*)"Models/Escena/Penguin/p2.obj"); // animacion compleja
+
+	// Interior
+	Model PlantaEnergia((char*)"Models/Escena/PlantaEnergia/plantaEnergia.obj");
+	Model TanqueOxigeno((char*)"Models/Escena/TanqueOxigeno/tanqueOxigeno.obj");
+	Model TanqueOxigeno1((char*)"Models/Escena/TanqueOxigeno/tanqueOxigeno1.obj");
+	Model Armario((char*)"Models/Escena/Interior/Armario.obj");
+	Model Armario1((char*)"Models/Escena/Interior/Armario1.obj");
+	Model Armario2((char*)"Models/Escena/Interior/Armario2.obj");
+	Model tuberia((char*)"Models/Escena/Interior/tuberia.obj");
 
 	// First, set the container's VAO (and VBO)
 	GLuint VBO, VAO;
