@@ -36,7 +36,7 @@ const GLuint WIDTH = 800, HEIGHT = 600;
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 
 // Camera
-Camera  camera(glm::vec3(500.0f, 10.0f, 3.0f));
+Camera  camera(glm::vec3(10.0f, 10.0f, 3.0f));
 GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
 bool keys[1024];
@@ -403,14 +403,17 @@ int main()
 
 void PutModel_static(glm::mat4 model, GLint modelLoc, Model objeto, Shader lightingShader) {
 	model = glm::mat4(1);
+	model = glm::scale(model,glm::vec3(0.25f));
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
 	objeto.Draw(lightingShader);
 }
 void PutModel_animated(glm::mat4 model, GLint modelLoc, Model objeto, Shader Anim) {
 	model = glm::mat4(1);
+	model = glm::scale(model, glm::vec3(0.25f));
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	glUniform1f(glGetUniformLocation(Anim.Program, "time"), glfwGetTime());
+	objeto.Draw(Anim);
 }
 
 // Moves/alters the camera positions based on user input

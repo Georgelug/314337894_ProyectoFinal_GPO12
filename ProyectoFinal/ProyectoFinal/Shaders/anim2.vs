@@ -18,7 +18,7 @@ uniform float time;
 void main()
 {
 	
-	float floating = 0.05*sin(PI*frequencyOfFloating*time);
+	float floating = 1*sin(PI*frequencyOfFloating*time);
 
 	gl_Position = projection*view*model*vec4( aPos.x , aPos.y+floating , aPos.z , 1);
 	
