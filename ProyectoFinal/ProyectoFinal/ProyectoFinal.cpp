@@ -28,14 +28,15 @@
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void MouseCallback(GLFWwindow* window, double xPos, double yPos);
 void DoMovement();
-
+void PutModel_static(glm::mat4 model, GLint modelLoc, Model objeto, Shader lightingShader);
+void PutModel_animated(glm::mat4 model, GLint modelLoc, Model objeto, Shader Anim);
 
 // Window dimensions
 const GLuint WIDTH = 800, HEIGHT = 600;
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 
 // Camera
-Camera  camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera  camera(glm::vec3(500.0f, 10.0f, 3.0f));
 GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
 bool keys[1024];
@@ -217,7 +218,7 @@ int main()
 		DoMovement();
 
 		// Clear the colorbuffer
-		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		// OpenGL options
@@ -292,34 +293,56 @@ int main()
 		view = camera.GetViewMatrix();
 		glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0f,1.0f, 1.0f, 1.0f);
 
-		// Escena
-		model = glm::mat4(1);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
-		Suelo.Draw(lightingShader);
-
-		model = glm::mat4(1);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
-		Edificio.Draw(lightingShader);
+		//### Escena ###
+		// objetos estaticos
+		//Exterior
+		PutModel_static(model,modelLoc,Suelo,lightingShader);
+		PutModel_static(model,modelLoc,Edificio,lightingShader);
+		PutModel_static(model,modelLoc,Snowman,lightingShader);
+		PutModel_static(model,modelLoc,penguin,lightingShader);
+		PutModel_static(model,modelLoc,penguin1,lightingShader);
 		
-		// objetos
-		model = glm::mat4(1);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
-		PlantaEnergia.Draw(lightingShader);
-
-		model = glm::mat4(1);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
-		TanqueOxigeno.Draw(lightingShader);
-		
-		model = glm::mat4(1);
-		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
-		TanqueOxigeno1.Draw(lightingShader);
+		// objetos del interior
+		PutModel_static(model, modelLoc, PlantaEnergia, lightingShader);
+		PutModel_static(model, modelLoc, TanqueOxigeno, lightingShader);
+		PutModel_static(model, modelLoc, TanqueOxigeno1, lightingShader);
+		PutModel_static(model, modelLoc, Armario, lightingShader);
+		PutModel_static(model, modelLoc, Armario1, lightingShader);
+		PutModel_static(model, modelLoc, Armario2, lightingShader);
+		PutModel_static(model, modelLoc, tuberia, lightingShader);
 
 
+		glBindVertexArray(0);
+
+		// objetos animados del exterior
+		Anim.Use();
+
+		modelLoc = glGetUniformLocation(Anim.Program, "model");
+		viewLoc = glGetUniformLocation(Anim.Program, "view");
+		projLoc = glGetUniformLocation(Anim.Program, "projection");
+
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+		PutModel_animated(model, modelLoc, Mar, Anim);
+		PutModel_animated(model, modelLoc, Estanques, Anim);
+
+		glBindVertexArray(0);
+
+		Anim2.Use();
+
+		modelLoc = glGetUniformLocation(Anim2.Program, "model");
+		viewLoc = glGetUniformLocation(Anim2.Program, "view");
+		projLoc = glGetUniformLocation(Anim2.Program, "projection");
+
+		glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
+		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+
+		PutModel_animated(model, modelLoc, icebergs, Anim2);
+
+		glBindVertexArray(0);
 
 		//glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
 		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
@@ -332,7 +355,6 @@ int main()
 		//glDisable(GL_BLEND);  //Desactiva el canal alfa 
 		//glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"),1.0f,1.0f,1.0f,1.0f);
 
-		glBindVertexArray(0);
 
 
 		// Also draw the lamp object, again binding the appropriate shader
@@ -379,6 +401,17 @@ int main()
 	return 0;
 }
 
+void PutModel_static(glm::mat4 model, GLint modelLoc, Model objeto, Shader lightingShader) {
+	model = glm::mat4(1);
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+	glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
+	objeto.Draw(lightingShader);
+}
+void PutModel_animated(glm::mat4 model, GLint modelLoc, Model objeto, Shader Anim) {
+	model = glm::mat4(1);
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+	glUniform1f(glGetUniformLocation(Anim.Program, "time"), glfwGetTime());
+}
 
 // Moves/alters the camera positions based on user input
 void DoMovement()

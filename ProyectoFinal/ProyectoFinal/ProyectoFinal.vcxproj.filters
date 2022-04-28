@@ -41,6 +41,18 @@
     <None Include="Shaders\lighting.vs">
       <Filter>Archivos de origen</Filter>
     </None>
+    <None Include="Shaders\anim.frag">
+      <Filter>Archivos de origen</Filter>
+    </None>
+    <None Include="Shaders\anim.vs">
+      <Filter>Archivos de origen</Filter>
+    </None>
+    <None Include="Shaders\anim2.frag">
+      <Filter>Archivos de origen</Filter>
+    </None>
+    <None Include="Shaders\anim2.vs">
+      <Filter>Archivos de origen</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ProyectoFinal.cpp">
