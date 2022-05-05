@@ -166,36 +166,36 @@ int main()
 	Model Edificio((char*)"Models/Escena/edificioTexturizadoV2.obj");
 
 	// Exterior
-	Model Suelo((char*)"Models/Escena/suelo.obj");
-	Model Mar((char*)"Models/Escena/Mar.obj"); // animacion
-	Model Estanques((char*)"Models/Escena/Estanques.obj"); // animacion
-	Model icebergs((char*)"Models/Escena/icebergs.obj"); // animacion
-	Model Snowman((char*)"Models/Escena/Snowman.obj"); 
-	Model penguin((char*)"Models/Escena/Penguin/p1.obj"); // animacion compleja
-	Model penguin1((char*)"Models/Escena/Penguin/p2.obj"); // animacion compleja
+	//Model Suelo((char*)"Models/Escena/suelo.obj");
+	//Model Mar((char*)"Models/Escena/Mar.obj"); // animacion
+	//Model Estanques((char*)"Models/Escena/Estanques.obj"); // animacion
+	//Model icebergs((char*)"Models/Escena/icebergs.obj"); // animacion
+	//Model Snowman((char*)"Models/Escena/Snowman.obj"); 
+	//Model penguin((char*)"Models/Escena/Penguin/p1.obj"); // animacion compleja
+	//Model penguin1((char*)"Models/Escena/Penguin/p2.obj"); // animacion compleja
 
 	// Interior
-	Model PlantaEnergia((char*)"Models/Escena/PlantaEnergia/plantaEnergia.obj"); //
-	Model TanqueOxigeno((char*)"Models/Escena/TanqueOxigeno/tanqueOxigeno.obj"); //
-	Model TanqueOxigeno1((char*)"Models/Escena/TanqueOxigeno/tanqueOxigeno1.obj"); //
+	//Model PlantaEnergia((char*)"Models/Escena/PlantaEnergia/plantaEnergia.obj"); //
+	//Model TanqueOxigeno((char*)"Models/Escena/TanqueOxigeno/tanqueOxigeno.obj"); //
+	//Model TanqueOxigeno1((char*)"Models/Escena/TanqueOxigeno/tanqueOxigeno1.obj"); //
 	Model Armario((char*)"Models/Escena/Interior/Armario.obj"); //
 	Model Armario1((char*)"Models/Escena/Interior/Armario1.obj"); //
-	Model Armario2((char*)"Models/Escena/Interior/Armario2.obj"); //
-	Model tuberia((char*)"Models/Escena/Interior/tuberia.obj"); //
-	Model Apagador((char*)"Models/Escena/Interior/apagador.obj"); //
-	Model Apagador1((char*)"Models/Escena/Interior/apagador1.obj"); //
-	Model Botas((char*)"Models/Escena/Interior/botas.obj"); //
-	Model Botiquines((char*)"Models/Escena/Interior/botiquines.obj"); //
-	Model ExtinguidorE((char*)"Models/Escena/Interior/extinguidorElectrico.obj");
-	Model Extinguidores((char*)"Models/Escena/Interior/extinguidores.obj");
-	Model Martillo((char*)"Models/Escena/Interior/martillo.obj");
-	Model Martillo1((char*)"Models/Escena/Interior/martillo1.obj");
-	Model Martillo2((char*)"Models/Escena/Interior/martillo2.obj");
-	Model Mesa((char*)"Models/Escena/Interior/mesa.obj");
-	Model Mesa1((char*)"Models/Escena/Interior/mesa1.obj");
-	Model Piolets((char*)"Models/Escena/Interior/piolet.obj");
-	Model PuertaExterior((char*)"Models/Escena/Interior/puertaExterior.obj");
-	Model PuertaInterior((char*)"Models/Escena/Interior/puertaInterior.obj");
+	//Model Armario2((char*)"Models/Escena/Interior/Armario2.obj"); //
+	//Model tuberia((char*)"Models/Escena/Interior/tuberia.obj"); //
+	//Model Apagador((char*)"Models/Escena/Interior/apagador.obj"); //
+	//Model Apagador1((char*)"Models/Escena/Interior/apagador1.obj"); //
+	//Model Botas((char*)"Models/Escena/Interior/botas.obj"); //
+	//Model Botiquines((char*)"Models/Escena/Interior/botiquines.obj"); //
+	//Model ExtinguidorE((char*)"Models/Escena/Interior/extinguidorElectrico.obj");
+	//Model Extinguidores((char*)"Models/Escena/Interior/extinguidores.obj");
+	//Model Martillo((char*)"Models/Escena/Interior/martillo.obj");
+	//Model Martillo1((char*)"Models/Escena/Interior/martillo1.obj");
+	//Model Martillo2((char*)"Models/Escena/Interior/martillo2.obj");
+	//Model Mesa((char*)"Models/Escena/Interior/mesa.obj");
+	//Model Mesa1((char*)"Models/Escena/Interior/mesa1.obj");
+	//Model Piolets((char*)"Models/Escena/Interior/piolet.obj");
+	//Model PuertaExterior((char*)"Models/Escena/Interior/puertaExterior.obj");
+	//Model PuertaInterior((char*)"Models/Escena/Interior/puertaInterior.obj");
 
 
 	// First, set the container's VAO (and VBO)
@@ -311,19 +311,19 @@ int main()
 		//### Escena ###
 		// objetos estaticos
 		//Exterior
-		PutModel_static(model,modelLoc,Suelo,lightingShader);
+		/*PutModel_static(model,modelLoc,Suelo,lightingShader);*/
 		PutModel_static(model,modelLoc,Edificio,lightingShader);
-		PutModel_static(model,modelLoc,Snowman,lightingShader);
+		/*PutModel_static(model,modelLoc,Snowman,lightingShader);
 		PutModel_static(model,modelLoc,penguin,lightingShader);
-		PutModel_static(model,modelLoc,penguin1,lightingShader);
+		PutModel_static(model,modelLoc,penguin1,lightingShader);*/
 		
 		// objetos del interior
-		PutModel_static(model, modelLoc, PlantaEnergia, lightingShader);
+		/*PutModel_static(model, modelLoc, PlantaEnergia, lightingShader);
 		PutModel_static(model, modelLoc, TanqueOxigeno, lightingShader);
-		PutModel_static(model, modelLoc, TanqueOxigeno1, lightingShader);
+		PutModel_static(model, modelLoc, TanqueOxigeno1, lightingShader);*/
 		PutModel_static(model, modelLoc, Armario, lightingShader);
 		PutModel_static(model, modelLoc, Armario1, lightingShader);
-		PutModel_static(model, modelLoc, Armario2, lightingShader);
+		/*PutModel_static(model, modelLoc, Armario2, lightingShader);
 		PutModel_static(model, modelLoc, tuberia, lightingShader);
 		PutModel_static(model, modelLoc, Apagador, lightingShader);
 		PutModel_static(model, modelLoc, Apagador1, lightingShader);
@@ -338,7 +338,7 @@ int main()
 		PutModel_static(model, modelLoc, Mesa1, lightingShader);
 		PutModel_static(model, modelLoc, Piolets, lightingShader);
 		PutModel_static(model, modelLoc, PuertaExterior, lightingShader);
-		PutModel_static(model, modelLoc, PuertaInterior, lightingShader);
+		PutModel_static(model, modelLoc, PuertaInterior, lightingShader);*/
 
 
 
@@ -355,8 +355,8 @@ int main()
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
-		PutModel_animated(model, modelLoc, Mar, Anim);
-		PutModel_animated(model, modelLoc, Estanques, Anim);
+		/*PutModel_animated(model, modelLoc, Mar, Anim);
+		PutModel_animated(model, modelLoc, Estanques, Anim);*/
 
 		glBindVertexArray(0);
 
@@ -370,7 +370,7 @@ int main()
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
-		PutModel_animated(model, modelLoc, icebergs, Anim2);
+		/*PutModel_animated(model, modelLoc, icebergs, Anim2);*/
 
 		glBindVertexArray(0);
 
