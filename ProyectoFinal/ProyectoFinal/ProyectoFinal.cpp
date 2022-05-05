@@ -175,13 +175,28 @@ int main()
 	Model penguin1((char*)"Models/Escena/Penguin/p2.obj"); // animacion compleja
 
 	// Interior
-	Model PlantaEnergia((char*)"Models/Escena/PlantaEnergia/plantaEnergia.obj");
-	Model TanqueOxigeno((char*)"Models/Escena/TanqueOxigeno/tanqueOxigeno.obj");
-	Model TanqueOxigeno1((char*)"Models/Escena/TanqueOxigeno/tanqueOxigeno1.obj");
-	Model Armario((char*)"Models/Escena/Interior/Armario.obj");
-	Model Armario1((char*)"Models/Escena/Interior/Armario1.obj");
-	Model Armario2((char*)"Models/Escena/Interior/Armario2.obj");
-	Model tuberia((char*)"Models/Escena/Interior/tuberia.obj");
+	Model PlantaEnergia((char*)"Models/Escena/PlantaEnergia/plantaEnergia.obj"); //
+	Model TanqueOxigeno((char*)"Models/Escena/TanqueOxigeno/tanqueOxigeno.obj"); //
+	Model TanqueOxigeno1((char*)"Models/Escena/TanqueOxigeno/tanqueOxigeno1.obj"); //
+	Model Armario((char*)"Models/Escena/Interior/Armario.obj"); //
+	Model Armario1((char*)"Models/Escena/Interior/Armario1.obj"); //
+	Model Armario2((char*)"Models/Escena/Interior/Armario2.obj"); //
+	Model tuberia((char*)"Models/Escena/Interior/tuberia.obj"); //
+	Model Apagador((char*)"Models/Escena/Interior/apagador.obj"); //
+	Model Apagador1((char*)"Models/Escena/Interior/apagador1.obj"); //
+	Model Botas((char*)"Models/Escena/Interior/botas.obj"); //
+	Model Botiquines((char*)"Models/Escena/Interior/botiquines.obj"); //
+	Model ExtinguidorE((char*)"Models/Escena/Interior/extinguidorElectrico.obj");
+	Model Extinguidores((char*)"Models/Escena/Interior/extinguidores.obj");
+	Model Martillo((char*)"Models/Escena/Interior/martillo.obj");
+	Model Martillo1((char*)"Models/Escena/Interior/martillo1.obj");
+	Model Martillo2((char*)"Models/Escena/Interior/martillo2.obj");
+	Model Mesa((char*)"Models/Escena/Interior/mesa.obj");
+	Model Mesa1((char*)"Models/Escena/Interior/mesa1.obj");
+	Model Piolets((char*)"Models/Escena/Interior/piolet.obj");
+	Model PuertaExterior((char*)"Models/Escena/Interior/puertaExterior.obj");
+	Model PuertaInterior((char*)"Models/Escena/Interior/puertaInterior.obj");
+
 
 	// First, set the container's VAO (and VBO)
 	GLuint VBO, VAO;
@@ -310,6 +325,21 @@ int main()
 		PutModel_static(model, modelLoc, Armario1, lightingShader);
 		PutModel_static(model, modelLoc, Armario2, lightingShader);
 		PutModel_static(model, modelLoc, tuberia, lightingShader);
+		PutModel_static(model, modelLoc, Apagador, lightingShader);
+		PutModel_static(model, modelLoc, Apagador1, lightingShader);
+		PutModel_static(model, modelLoc, Botas, lightingShader);
+		PutModel_static(model, modelLoc, Botiquines, lightingShader);
+		PutModel_static(model, modelLoc, ExtinguidorE, lightingShader);
+		PutModel_static(model, modelLoc, Extinguidores, lightingShader);
+		PutModel_static(model, modelLoc, Martillo, lightingShader);
+		PutModel_static(model, modelLoc, Martillo1, lightingShader);
+		PutModel_static(model, modelLoc, Martillo2, lightingShader);
+		PutModel_static(model, modelLoc, Mesa, lightingShader);
+		PutModel_static(model, modelLoc, Mesa1, lightingShader);
+		PutModel_static(model, modelLoc, Piolets, lightingShader);
+		PutModel_static(model, modelLoc, PuertaExterior, lightingShader);
+		PutModel_static(model, modelLoc, PuertaInterior, lightingShader);
+
 
 
 		glBindVertexArray(0);
