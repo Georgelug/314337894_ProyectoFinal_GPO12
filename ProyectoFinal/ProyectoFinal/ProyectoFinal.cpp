@@ -23,6 +23,7 @@
 #include "Shader.h"
 #include "Camera.h"
 #include "Model.h"
+#include "Texture.h"
 
 // Function prototypes
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
@@ -98,7 +99,78 @@ float vertices[] = {
 	   -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 };
 
+GLfloat skyboxVertices[] = {
+	// Positions
+	-1.0f,  1.0f, -1.0f,
+	-1.0f, -1.0f, -1.0f,
+	1.0f, -1.0f, -1.0f,
+	1.0f, -1.0f, -1.0f,
+	1.0f,  1.0f, -1.0f,
+	-1.0f,  1.0f, -1.0f,
 
+	-1.0f, -1.0f,  1.0f,
+	-1.0f, -1.0f, -1.0f,
+	-1.0f,  1.0f, -1.0f,
+	-1.0f,  1.0f, -1.0f,
+	-1.0f,  1.0f,  1.0f,
+	-1.0f, -1.0f,  1.0f,
+
+	1.0f, -1.0f, -1.0f,
+	1.0f, -1.0f,  1.0f,
+	1.0f,  1.0f,  1.0f,
+	1.0f,  1.0f,  1.0f,
+	1.0f,  1.0f, -1.0f,
+	1.0f, -1.0f, -1.0f,
+
+	-1.0f, -1.0f,  1.0f,
+	-1.0f,  1.0f,  1.0f,
+	1.0f,  1.0f,  1.0f,
+	1.0f,  1.0f,  1.0f,
+	1.0f, -1.0f,  1.0f,
+	-1.0f, -1.0f,  1.0f,
+
+	-1.0f,  1.0f, -1.0f,
+	1.0f,  1.0f, -1.0f,
+	1.0f,  1.0f,  1.0f,
+	1.0f,  1.0f,  1.0f,
+	-1.0f,  1.0f,  1.0f,
+	-1.0f,  1.0f, -1.0f,
+
+	-1.0f, -1.0f, -1.0f,
+	-1.0f, -1.0f,  1.0f,
+	1.0f, -1.0f, -1.0f,
+	1.0f, -1.0f, -1.0f,
+	-1.0f, -1.0f,  1.0f,
+	1.0f, -1.0f,  1.0f
+};
+
+
+GLuint indices[] =
+{  // Note that we start from 0!
+	0,1,2,3,
+	4,5,6,7,
+	8,9,10,11,
+	12,13,14,15,
+	16,17,18,19,
+	20,21,22,23,
+	24,25,26,27,
+	28,29,30,31,
+	32,33,34,35
+};
+
+// Positions all containers
+glm::vec3 cubePositions[] = {
+	glm::vec3(0.0f,  0.0f,  0.0f),
+	glm::vec3(2.0f,  5.0f, -15.0f),
+	glm::vec3(-1.5f, -2.2f, -2.5f),
+	glm::vec3(-3.8f, -2.0f, -12.3f),
+	glm::vec3(2.4f, -0.4f, -3.5f),
+	glm::vec3(-1.7f,  3.0f, -7.5f),
+	glm::vec3(1.3f, -2.0f, -2.5f),
+	glm::vec3(1.5f,  2.0f, -2.5f),
+	glm::vec3(1.5f,  0.2f, -1.5f),
+	glm::vec3(-1.3f,  1.0f, -1.5f)
+};
 
 glm::vec3 Light0 = glm::vec3(0);
 glm::vec3 Light1 = glm::vec3(0);
@@ -160,26 +232,27 @@ int main()
 	Shader lampShader("Shaders/lamp.vs", "Shaders/lamp.frag");
 	Shader Anim("Shaders/anim.vs", "Shaders/anim.frag");
 	Shader Anim2("Shaders/anim2.vs", "Shaders/anim2.frag");
+	Shader SkyBoxshader("Shaders/SkyBox.vs", "Shaders/SkyBox.frag");
 
 	//#### Modelos #####
 	// Edificio
 	Model Edificio((char*)"Models/Escena/edificioTexturizadoV2.obj");
 
-	// Exterior
-	//Model Suelo((char*)"Models/Escena/suelo.obj");
-	//Model Mar((char*)"Models/Escena/Mar.obj"); // animacion
-	//Model Estanques((char*)"Models/Escena/Estanques.obj"); // animacion
-	//Model icebergs((char*)"Models/Escena/icebergs.obj"); // animacion
-	//Model Snowman((char*)"Models/Escena/Snowman.obj"); 
-	//Model penguin((char*)"Models/Escena/Penguin/p1.obj"); // animacion compleja
-	//Model penguin1((char*)"Models/Escena/Penguin/p2.obj"); // animacion compleja
+	 //Exterior
+	Model Suelo((char*)"Models/Escena/suelo.obj");
+	Model Mar((char*)"Models/Escena/Mar.obj"); // animacion
+	Model Estanques((char*)"Models/Escena/Estanques.obj"); // animacion
+	Model icebergs((char*)"Models/Escena/icebergs.obj"); // animacion
+	Model Snowman((char*)"Models/Escena/Snowman.obj"); 
+	Model penguin((char*)"Models/Escena/Penguin/p1.obj"); // animacion compleja
+	Model penguin1((char*)"Models/Escena/Penguin/p2.obj"); // animacion compleja
 
 	// Interior
 	//Model PlantaEnergia((char*)"Models/Escena/PlantaEnergia/plantaEnergia.obj"); //
 	//Model TanqueOxigeno((char*)"Models/Escena/TanqueOxigeno/tanqueOxigeno.obj"); //
 	//Model TanqueOxigeno1((char*)"Models/Escena/TanqueOxigeno/tanqueOxigeno1.obj"); //
-	Model Armario((char*)"Models/Escena/Interior/Armario.obj"); //
-	Model Armario1((char*)"Models/Escena/Interior/Armario1.obj"); //
+	//Model Armario((char*)"Models/Escena/Interior/Armario.obj"); //
+	//Model Armario1((char*)"Models/Escena/Interior/Armario1.obj"); //
 	//Model Armario2((char*)"Models/Escena/Interior/Armario2.obj"); //
 	//Model tuberia((char*)"Models/Escena/Interior/tuberia.obj"); //
 	//Model Apagador((char*)"Models/Escena/Interior/apagador.obj"); //
@@ -216,6 +289,27 @@ int main()
 	lightingShader.Use();
 	glUniform1i(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 0);
 	//glUniform1i(glGetUniformLocation(lightingShader.Program, "material.specular"), 1);
+
+	//SkyBox
+	GLuint skyboxVBO, skyboxVAO;
+	glGenVertexArrays(1, &skyboxVAO);
+	glGenBuffers(1, &skyboxVBO);
+	glBindVertexArray(skyboxVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, skyboxVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(skyboxVertices), &skyboxVertices, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
+
+	// Load textures
+	vector<const GLchar*> faces;
+	faces.push_back("SkyBox/right.tga");
+	faces.push_back("SkyBox/left.tga");
+	faces.push_back("SkyBox/top.tga");
+	faces.push_back("SkyBox/bottom.tga");
+	faces.push_back("SkyBox/back.tga");
+	faces.push_back("SkyBox/front.tga");
+
+	GLuint cubemapTexture = TextureLoading::LoadCubemap(faces);
 
 	glm::mat4 projection = glm::perspective(camera.GetZoom(), (GLfloat)SCREEN_WIDTH / (GLfloat)SCREEN_HEIGHT, 0.1f, 100.0f);
 
@@ -311,19 +405,19 @@ int main()
 		//### Escena ###
 		// objetos estaticos
 		//Exterior
-		/*PutModel_static(model,modelLoc,Suelo,lightingShader);*/
+		PutModel_static(model,modelLoc,Suelo,lightingShader);
 		PutModel_static(model,modelLoc,Edificio,lightingShader);
-		/*PutModel_static(model,modelLoc,Snowman,lightingShader);
-		PutModel_static(model,modelLoc,penguin,lightingShader);
+		PutModel_static(model,modelLoc,Snowman,lightingShader);
+		/*PutModel_static(model,modelLoc,penguin,lightingShader);
 		PutModel_static(model,modelLoc,penguin1,lightingShader);*/
 		
 		// objetos del interior
 		/*PutModel_static(model, modelLoc, PlantaEnergia, lightingShader);
 		PutModel_static(model, modelLoc, TanqueOxigeno, lightingShader);
-		PutModel_static(model, modelLoc, TanqueOxigeno1, lightingShader);*/
+		PutModel_static(model, modelLoc, TanqueOxigeno1, lightingShader);
 		PutModel_static(model, modelLoc, Armario, lightingShader);
 		PutModel_static(model, modelLoc, Armario1, lightingShader);
-		/*PutModel_static(model, modelLoc, Armario2, lightingShader);
+		PutModel_static(model, modelLoc, Armario2, lightingShader);
 		PutModel_static(model, modelLoc, tuberia, lightingShader);
 		PutModel_static(model, modelLoc, Apagador, lightingShader);
 		PutModel_static(model, modelLoc, Apagador1, lightingShader);
@@ -417,12 +511,32 @@ int main()
 		//glBindVertexArray(0);
 
 
+		// Draw skybox as last
+		glDepthFunc(GL_LEQUAL);  // Change depth function so depth test passes when values are equal to depth buffer's content
+		SkyBoxshader.Use();
+		view = glm::mat4(glm::mat3(camera.GetViewMatrix()));	// Remove any translation component of the view matrix
+		glUniformMatrix4fv(glGetUniformLocation(SkyBoxshader.Program, "view"), 1, GL_FALSE, glm::value_ptr(view));
+		glUniformMatrix4fv(glGetUniformLocation(SkyBoxshader.Program, "projection"), 1, GL_FALSE, glm::value_ptr(projection));
+
+		// skybox cube
+		glBindVertexArray(skyboxVAO);
+		glActiveTexture(GL_TEXTURE1);
+		glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+		glBindVertexArray(0);
+		glDepthFunc(GL_LESS); // Set depth function back to default
+
 
 		// Swap the screen buffers
 		glfwSwapBuffers(window);
 	}
 
-
+	glDeleteVertexArrays(1, &VAO);
+	//glDeleteVertexArrays(1, &lightVAO);
+	glDeleteBuffers(1, &VBO);
+	//glDeleteBuffers(1, &EBO);
+	glDeleteVertexArrays(1, &skyboxVAO);
+	glDeleteBuffers(1, &skyboxVBO);
 	// Terminate GLFW, clearing any resources allocated by GLFW.
 	glfwTerminate();
 
