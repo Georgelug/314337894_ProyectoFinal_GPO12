@@ -24,12 +24,15 @@
 #include "Camera.h"
 #include "Model.h"
 #include "Texture.h"
+#include "Scene.h"
 
 // Function prototypes
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
 void MouseCallback(GLFWwindow* window, double xPos, double yPos);
 void DoMovement();
 void PutModel_static(glm::mat4 model, GLint modelLoc, Model objeto, Shader lightingShader);
+void PutGlass(glm::mat4 model, GLint modelLoc, Model objeto, Shader lightingShader);
+void PutLamps(glm::mat4 model, GLint modelLoc, Model objeto, Shader lightingShader, int pointLightPosition);
 void PutModel_animated(glm::mat4 model, GLint modelLoc, Model objeto, Shader Anim);
 
 // Window dimensions
@@ -37,7 +40,7 @@ const GLuint WIDTH = 800, HEIGHT = 600;
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 
 // Camera
-Camera  camera(glm::vec3(10.0f, 10.0f, 3.0f));
+Camera  camera(glm::vec3(1.0f, 10.0f, 1.0f));
 GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
 bool keys[1024];
@@ -49,11 +52,13 @@ bool active;
 
 // Positions of the point lights
 glm::vec3 pointLightPositions[] = {
-	glm::vec3(-5.0f,0.0f, 5.0f),    // 1er cuadrante
-	glm::vec3(5.0f,0.0f, 5.0f),    // 2do cuadrante
-	glm::vec3(-5.0f,0.0f, -5.0f), // 3er cuadrante
-	glm::vec3(5.0f,0.0f,  -5.0f) // 4to cuadrante
+	glm::vec3(72.727f,28.977f, -1.2387f),    // lampara 1
+	glm::vec3(57.728f,28.977f, -1.2387f),    // lampara 2 // revisar lamps
 };
+//glm::vec3 pointLightPositions[] = {
+//	glm::vec3(0.0f),    // lampara 1
+//	glm::vec3(1.0f,10.0f,1.0f)    // lampara 2 
+//};
 
 float vertices[] = {
 	 -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -236,39 +241,32 @@ int main()
 
 	//#### Modelos #####
 	// Edificio
-	Model Edificio((char*)"Models/Escena/edificioTexturizadoV2.obj");
+	Model Edificio((char*)"Models/Escena/edificio.obj");
 
 	 //Exterior
 	Model Suelo((char*)"Models/Escena/suelo.obj");
 	Model Mar((char*)"Models/Escena/Mar.obj"); // animacion
 	Model Estanques((char*)"Models/Escena/Estanques.obj"); // animacion
 	Model icebergs((char*)"Models/Escena/icebergs.obj"); // animacion
-	Model Snowman((char*)"Models/Escena/Snowman.obj"); 
 	Model penguin((char*)"Models/Escena/Penguin/p1.obj"); // animacion compleja
 	Model penguin1((char*)"Models/Escena/Penguin/p2.obj"); // animacion compleja
 
 	// Interior
-	//Model PlantaEnergia((char*)"Models/Escena/PlantaEnergia/plantaEnergia.obj"); //
-	//Model TanqueOxigeno((char*)"Models/Escena/TanqueOxigeno/tanqueOxigeno.obj"); //
-	//Model TanqueOxigeno1((char*)"Models/Escena/TanqueOxigeno/tanqueOxigeno1.obj"); //
-	//Model Armario((char*)"Models/Escena/Interior/Armario.obj"); //
-	//Model Armario1((char*)"Models/Escena/Interior/Armario1.obj"); //
-	//Model Armario2((char*)"Models/Escena/Interior/Armario2.obj"); //
-	//Model tuberia((char*)"Models/Escena/Interior/tuberia.obj"); //
-	//Model Apagador((char*)"Models/Escena/Interior/apagador.obj"); //
-	//Model Apagador1((char*)"Models/Escena/Interior/apagador1.obj"); //
-	//Model Botas((char*)"Models/Escena/Interior/botas.obj"); //
-	//Model Botiquines((char*)"Models/Escena/Interior/botiquines.obj"); //
-	//Model ExtinguidorE((char*)"Models/Escena/Interior/extinguidorElectrico.obj");
-	//Model Extinguidores((char*)"Models/Escena/Interior/extinguidores.obj");
-	//Model Martillo((char*)"Models/Escena/Interior/martillo.obj");
-	//Model Martillo1((char*)"Models/Escena/Interior/martillo1.obj");
-	//Model Martillo2((char*)"Models/Escena/Interior/martillo2.obj");
-	//Model Mesa((char*)"Models/Escena/Interior/mesa.obj");
-	//Model Mesa1((char*)"Models/Escena/Interior/mesa1.obj");
-	//Model Piolets((char*)"Models/Escena/Interior/piolet.obj");
-	//Model PuertaExterior((char*)"Models/Escena/Interior/puertaExterior.obj");
-	//Model PuertaInterior((char*)"Models/Escena/Interior/puertaInterior.obj");
+	Model PlantaEnergia((char*)"Models/Escena/PlantaEnergia/plantaEnergia.obj"); //
+	Model TanqueOxigeno((char*)"Models/Escena/TanqueOxigeno/tanqueOxigeno.obj"); //
+	Model Armario((char*)"Models/Escena/Interior/Armario.obj"); //
+	Model Tuberia((char*)"Models/Escena/Interior/tuberia.obj"); //
+	Model Apagadores((char*)"Models/Escena/Instalaciones/apagadores.obj"); //
+	Model Botas((char*)"Models/Escena/Instalaciones/botas.obj"); //
+	Model Botiquines((char*)"Models/Escena/Instalaciones/botequin.obj"); //
+	Model Extinguidores((char*)"Models/Escena/Instalaciones/FireExtinguisher/Extinguidores.obj");
+	//Model Martillo((char*)"Models/Escena/Instalaciones/martillo.obj");
+	Model Mesa((char*)"Models/Escena/Instalaciones/mesa.obj");
+	Model Piolets((char*)"Models/Escena/Instalaciones/piolet.obj");
+	Model Ventanas((char*)"Models/Escena/Instalaciones/ventana.obj");
+	Model BaseLamps((char*)"Models/Escena/Instalaciones/baselamps.obj");
+	Model Lamp1((char*)"Models/Escena/Instalaciones/lamp1.obj");
+	Model Lamp2((char*)"Models/Escena/Instalaciones/lamp2.obj");
 
 
 	// First, set the container's VAO (and VBO)
@@ -302,12 +300,12 @@ int main()
 
 	// Load textures
 	vector<const GLchar*> faces;
-	faces.push_back("SkyBox/right.tga");
-	faces.push_back("SkyBox/left.tga");
-	faces.push_back("SkyBox/top.tga");
-	faces.push_back("SkyBox/bottom.tga");
-	faces.push_back("SkyBox/back.tga");
-	faces.push_back("SkyBox/front.tga");
+	faces.push_back("SkyBox/night/right.tga");
+	faces.push_back("SkyBox/night/left.tga");
+	faces.push_back("SkyBox/night/top.tga");
+	faces.push_back("SkyBox/night/bottom.tga");
+	faces.push_back("SkyBox/night/back.tga");
+	faces.push_back("SkyBox/night/front.tga");
 
 	GLuint cubemapTexture = TextureLoading::LoadCubemap(faces);
 
@@ -346,37 +344,27 @@ int main()
 
 		// Directional light
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -0.2f, -1.0f, -0.3f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 1.0f, 1.0f, 1.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 1.0f, 1.0f, 1.0f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 1.0f, 1.0f, 1.0f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.5f, 0.5f, 0.5f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.5f, 0.5f, 0.5f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 1.0f,1.0f,1.0f);
 
+		// lamparas
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].position"), pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].ambient"), 1.0, 1.0, 1.0);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].diffuse"), 1.0, 1.0, 1.0);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].specular"), 1.0f, 1.0f, 1.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].constant"), 1.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].linear"), 0.7f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].quadratic"),1.8f);
+		 
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].position"), pointLightPositions[1].x, pointLightPositions[1].y, pointLightPositions[1].z);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].ambient"), 1.0, 1.0, 1.0);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].diffuse"), 1.0, 1.0, 1.0);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[1].specular"), 1.0f, 1.0f, 1.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].constant"), 1.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].linear"), 0.7f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[1].quadratic"),1.8f);
 
-		//// Point light 1
-	 //   glm::vec3 lightColor;
-		//lightColor.x= abs(sin(glfwGetTime() *Light0.x));
-		//lightColor.y= abs(sin(glfwGetTime() *Light0.y));
-		//lightColor.z= sin(glfwGetTime() *Light1.z);
-
-		//glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].position"), pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z);
-		//glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].ambient"), lightColor.x,lightColor.y, lightColor.z);
-		//glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].diffuse"), lightColor.x,lightColor.y,lightColor.z);
-		//glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].specular"), 1.0f, 1.0f, 1.0f);
-		//glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].constant"), 1.0f);
-		//glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].linear"), 0.7f);
-		//glUniform1f(glGetUniformLocation(lightingShader.Program, "pointLights[0].quadratic"),1.8f);
-
-
-		//// SpotLight
-		//glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.position"), lightPos.x, lightPos.y, lightPos.z);
-		//glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.direction"), lightDir.x, lightDir.y, lightDir.z);
-		//glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.ambient"), 1.0f, 1.0f, 1.0f);
-		//glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.diffuse"), 1.0f, 1.0f, 1.0f);
-		//glUniform3f(glGetUniformLocation(lightingShader.Program, "spotLight.specular"),1.0f, 1.0f, 1.0f);
-		//glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.constant"), 1.0f);
-		//glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.linear"), 0.35f);
-		//glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.quadratic"), 0.44f);
-		//glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.cutOff"), glm::cos(glm::radians(45.0f)));
-		//glUniform1f(glGetUniformLocation(lightingShader.Program, "spotLight.outerCutOff"), glm::cos(glm::radians(60.0f)));
 
 		// Set material properties
 		glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 16.0f);
@@ -407,33 +395,25 @@ int main()
 		//Exterior
 		PutModel_static(model,modelLoc,Suelo,lightingShader);
 		PutModel_static(model,modelLoc,Edificio,lightingShader);
-		PutModel_static(model,modelLoc,Snowman,lightingShader);
-		/*PutModel_static(model,modelLoc,penguin,lightingShader);
-		PutModel_static(model,modelLoc,penguin1,lightingShader);*/
+		PutModel_static(model,modelLoc,penguin,lightingShader);
+		PutModel_static(model,modelLoc,penguin1,lightingShader);
 		
 		// objetos del interior
-		/*PutModel_static(model, modelLoc, PlantaEnergia, lightingShader);
+		PutModel_static(model, modelLoc, PlantaEnergia, lightingShader);
 		PutModel_static(model, modelLoc, TanqueOxigeno, lightingShader);
-		PutModel_static(model, modelLoc, TanqueOxigeno1, lightingShader);
 		PutModel_static(model, modelLoc, Armario, lightingShader);
-		PutModel_static(model, modelLoc, Armario1, lightingShader);
-		PutModel_static(model, modelLoc, Armario2, lightingShader);
-		PutModel_static(model, modelLoc, tuberia, lightingShader);
-		PutModel_static(model, modelLoc, Apagador, lightingShader);
-		PutModel_static(model, modelLoc, Apagador1, lightingShader);
+		PutModel_static(model, modelLoc, Tuberia, lightingShader);
+		PutModel_static(model, modelLoc, Apagadores, lightingShader);
 		PutModel_static(model, modelLoc, Botas, lightingShader);
 		PutModel_static(model, modelLoc, Botiquines, lightingShader);
-		PutModel_static(model, modelLoc, ExtinguidorE, lightingShader);
 		PutModel_static(model, modelLoc, Extinguidores, lightingShader);
-		PutModel_static(model, modelLoc, Martillo, lightingShader);
-		PutModel_static(model, modelLoc, Martillo1, lightingShader);
-		PutModel_static(model, modelLoc, Martillo2, lightingShader);
+		//PutModel_static(model, modelLoc, Martillo, lightingShader);
 		PutModel_static(model, modelLoc, Mesa, lightingShader);
-		PutModel_static(model, modelLoc, Mesa1, lightingShader);
 		PutModel_static(model, modelLoc, Piolets, lightingShader);
-		PutModel_static(model, modelLoc, PuertaExterior, lightingShader);
-		PutModel_static(model, modelLoc, PuertaInterior, lightingShader);*/
-
+		PutModel_static(model, modelLoc, BaseLamps, lightingShader);
+		PutGlass(model, modelLoc, Ventanas, lightingShader);
+		PutLamps(model, modelLoc, Lamp1, lightingShader, 0);
+		PutLamps(model, modelLoc, Lamp2, lightingShader, 1);
 
 
 		glBindVertexArray(0);
@@ -449,8 +429,8 @@ int main()
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
-		/*PutModel_animated(model, modelLoc, Mar, Anim);
-		PutModel_animated(model, modelLoc, Estanques, Anim);*/
+		PutModel_animated(model, modelLoc, Mar, Anim);
+		PutModel_animated(model, modelLoc, Estanques, Anim);
 
 		glBindVertexArray(0);
 
@@ -464,21 +444,11 @@ int main()
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
-		/*PutModel_animated(model, modelLoc, icebergs, Anim2);*/
+		PutModel_animated(model, modelLoc, icebergs, Anim2);
 
 		glBindVertexArray(0);
 
-		//glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
-		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); 
-		//model = glm::mat4(1);
-		//model = glm::translate(model, pointLightPositions[0]);
-		//glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-		//glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"),0);
-		//glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"),1.0f,1.0f,0.0f,0.75);
-		//Esfera.Draw(lightingShader);
-		//glDisable(GL_BLEND);  //Desactiva el canal alfa 
-		//glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"),1.0f,1.0f,1.0f,1.0f);
-
+	
 
 
 		// Also draw the lamp object, again binding the appropriate shader
@@ -547,18 +517,47 @@ int main()
 
 void PutModel_static(glm::mat4 model, GLint modelLoc, Model objeto, Shader lightingShader) {
 	model = glm::mat4(1);
-	model = glm::scale(model,glm::vec3(0.25f));
+	model = glm::scale(model,glm::vec3(0.15f));
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
 	objeto.Draw(lightingShader);
 }
 void PutModel_animated(glm::mat4 model, GLint modelLoc, Model objeto, Shader Anim) {
 	model = glm::mat4(1);
-	model = glm::scale(model, glm::vec3(0.25f));
+	model = glm::scale(model, glm::vec3(0.15f));
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	glUniform1f(glGetUniformLocation(Anim.Program, "time"), glfwGetTime());
 	objeto.Draw(Anim);
 }
+
+void PutGlass(glm::mat4 model, GLint modelLoc, Model objeto, Shader lightingShader){
+	glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	model = glm::mat4(1);
+	model = glm::scale(model, glm::vec3(0.15f));
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+	glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
+	glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 0.25f, 0.25f, 0.25f, 0.7);
+	objeto.Draw(lightingShader);
+	glDisable(GL_BLEND);  //Desactiva el canal alfa 
+	glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0f, 1.0f, 1.0f, 1.0f);
+}
+
+void PutLamps(glm::mat4 model, GLint modelLoc, Model objeto, Shader lightingShader, int pointLightPosition){
+	glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	model = glm::mat4(1);
+	//model = glm::scale(model, glm::vec3(10.0f));
+	model = glm::translate(model, pointLightPositions[pointLightPosition]);
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+	glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
+	glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0f, 1.0f, 1.0f, 0.8);
+	objeto.Draw(lightingShader);
+	glDisable(GL_BLEND);  //Desactiva el canal alfa 
+	glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0f, 1.0f, 1.0f, 1.0f);
+}
+
+
 
 // Moves/alters the camera positions based on user input
 void DoMovement()

@@ -1,7 +1,7 @@
-# Blender MTL File: 'botas.blend'
+# Blender MTL File: 'edificioTexturizadoV3.blend'
 # Material Count: 2
 
-newmtl Material.001
+newmtl Material.409
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -12,7 +12,7 @@ d 1.000000
 illum 2
 map_Kd text_amarilla.png
 
-newmtl Material.002
+newmtl Material.410
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000

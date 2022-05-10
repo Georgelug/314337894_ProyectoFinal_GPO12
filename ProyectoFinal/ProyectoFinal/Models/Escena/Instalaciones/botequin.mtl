@@ -1,7 +1,7 @@
-# Blender MTL File: 'botequin.blend'
+# Blender MTL File: 'edificioTexturizadoV3.blend'
 # Material Count: 7
 
-newmtl Material.001
+newmtl Material.047
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -12,7 +12,7 @@ d 1.000000
 illum 2
 map_Kd text_roja.png
 
-newmtl Material.002
+newmtl Material.056
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -23,7 +23,7 @@ d 1.000000
 illum 2
 map_Kd metal plateado.png
 
-newmtl Material.003
+newmtl Material.060
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -34,7 +34,7 @@ d 1.000000
 illum 2
 map_Kd metal plateado.png
 
-newmtl Material.004
+newmtl Material.082
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -45,7 +45,7 @@ d 1.000000
 illum 2
 map_Kd metal plateado.png
 
-newmtl Material.005
+newmtl Material.083
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -56,7 +56,7 @@ d 1.000000
 illum 2
 map_Kd metal plateado.png
 
-newmtl Material.006
+newmtl Material.090
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
@@ -67,7 +67,7 @@ d 1.000000
 illum 2
 map_Kd t_blanco.png
 
-newmtl Material.007
+newmtl Material.091
 Ns 225.000000
 Ka 1.000000 1.000000 1.000000
 Kd 0.800000 0.800000 0.800000
