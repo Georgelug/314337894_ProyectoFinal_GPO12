@@ -1,6 +1,6 @@
 #version 330 core
 
-#define NUMBER_OF_POINT_LIGHTS 0 // se define un numero de luces puntuales
+#define NUMBER_OF_POINT_LIGHTS 2 // se define un numero de luces puntuales
 
 // El material 
 // se define por una componente difusa la cual sera determinada por la textura, 
@@ -76,7 +76,7 @@ out vec4 color;
 
 uniform vec3 viewPos; // posicion de la vista
 uniform DirLight dirLight; // la direccion de la luz
-// uniform PointLight pointLights[NUMBER_OF_POINT_LIGHTS]; // un arreglo de pointlights, el cual sera de tamaño 4
+uniform PointLight pointLights[NUMBER_OF_POINT_LIGHTS]; // un arreglo de pointlights, el cual sera de tamaño 4
 // uniform SpotLight spotLight; // una spotlight
 uniform Material material; // y un material
 uniform int activaTransparencia;
@@ -97,10 +97,10 @@ void main( )
     vec3 result = CalcDirLight( dirLight, norm, viewDir );
     
     // Point lights
-    //for ( int i = 0; i < NUMBER_OF_POINT_LIGHTS; i++ )
-    //{
-       // result += CalcPointLight( pointLights[i], norm, FragPos, viewDir );
-    //}
+    for ( int i = 0; i < NUMBER_OF_POINT_LIGHTS; i++ )
+    {
+        result += CalcPointLight( pointLights[i], norm, FragPos, viewDir );
+    }
     
     // Spot light
     //result += CalcSpotLight( spotLight, norm, FragPos, viewDir );
