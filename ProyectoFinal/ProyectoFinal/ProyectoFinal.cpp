@@ -25,7 +25,7 @@
 #include "Camera.h"
 #include "Model.h"
 #include "Texture.h"
-#include "Scene.h"
+#include "Penguin.h"
 
 // Function prototypes
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
@@ -42,7 +42,7 @@ const GLuint WIDTH = 800, HEIGHT = 600;
 int SCREEN_WIDTH, SCREEN_HEIGHT;
 
 // Camera
-Camera  camera(glm::vec3(1.0f, 10.0f, 1.0f));
+Camera  camera(glm::vec3(0.0f, 10.0f, 0.0f));
 GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
 bool keys[1024];
@@ -55,7 +55,7 @@ bool active;
 // Positions of the point lights
 glm::vec3 pointLightPositions[] = {
 	glm::vec3(3.98986,7.5499,0.32613),    // lampara 1
-	glm::vec3(18.9702,7.5499,0.32613),    // lampara 2 // revisar lamps
+	glm::vec3(18.9702,7.5499,0.32613),    // lampara 2 
 };
 //glm::vec3 pointLightPositions[] = {
 //	glm::vec3(0.0f),    // lampara 1
@@ -160,7 +160,7 @@ GLuint indices[] =
 	12,13,14,15,
 	16,17,18,19,
 	20,21,22,23,
-	24,25,26,27,
+	24,25,26,27, 
 	28,29,30,31,
 	32,33,34,35
 };
@@ -250,8 +250,9 @@ int main()
 	Model Mar((char*)"Models/Escena/Mar.obj"); // animacion
 	Model Estanques((char*)"Models/Escena/Estanques.obj"); // animacion
 	Model icebergs((char*)"Models/Escena/icebergs.obj"); // animacion
-	Model penguin((char*)"Models/Escena/Penguin/p1.obj"); // animacion compleja
-	Model penguin1((char*)"Models/Escena/Penguin/p2.obj"); // animacion compleja
+	//Model penguin((char*)"Models/Escena/Penguin/p1.obj"); // animacion compleja
+	//Model penguin1((char*)"Models/Escena/Penguin/p2.obj"); // animacion compleja
+
 
 	// Interior
 	Model PlantaEnergia((char*)"Models/Escena/PlantaEnergia/plantaEnergia.obj"); //
@@ -271,6 +272,8 @@ int main()
 	Model Lamp2((char*)"Models/Escena/Instalaciones/lamp2.obj");
 	Model Oso((char*)"Models/Escena/OsoPolar/polar.obj");
 	Model BaseOso((char*)"Models/Escena/BaseOso.obj");
+	
+	Penguin penguin1(&(lightingShader),glm::vec3(40.0f, -1.0f,0.0f));
 
 	// First, set the container's VAO (and VBO)
 	GLuint VBO, VAO;
@@ -398,8 +401,6 @@ int main()
 		//Exterior
 		PutModel_static(model,modelLoc,Suelo,lightingShader);
 		PutModel_static(model,modelLoc,Edificio,lightingShader);
-		PutModel_static(model,modelLoc,penguin,lightingShader);
-		PutModel_static(model,modelLoc,penguin1,lightingShader);
 		
 		// objetos del interior
 		PutModel_static(model, modelLoc, PlantaEnergia, lightingShader);
@@ -422,6 +423,8 @@ int main()
 		// iluminacion
 		PutLamps(model, modelLoc, Lamp1, lightingShader, 0);
 		PutLamps(model, modelLoc, Lamp2, lightingShader, 1);
+
+		penguin1.PenguinAnimation(modelLoc,40.0f);
 
 
 		glBindVertexArray(0);

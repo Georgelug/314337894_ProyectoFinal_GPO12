@@ -21,7 +21,7 @@
   <ItemGroup>
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Model.h" />
-    <ClInclude Include="Scene.h" />
+    <ClInclude Include="Penguin.h" />
     <ClInclude Include="Shader.h" />
   </ItemGroup>
   <ItemGroup>
