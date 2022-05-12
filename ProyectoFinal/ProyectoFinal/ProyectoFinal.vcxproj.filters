@@ -53,12 +53,6 @@
     <None Include="Shaders\anim2.vs">
       <Filter>Archivos de origen</Filter>
     </None>
-    <None Include="Shaders\lighting2.frag">
-      <Filter>Archivos de origen</Filter>
-    </None>
-    <None Include="Shaders\lighting2.vs">
-      <Filter>Archivos de origen</Filter>
-    </None>
     <None Include="Shaders\SkyBox.frag">
       <Filter>Archivos de origen</Filter>
     </None>

@@ -28,13 +28,43 @@
 #include "Penguin.h"
 
 // Function prototypes
+
+// Function that makes posible to listen the events from the keyboard
 void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mode);
+
+// Function that makes posible to listen the events from the mouse
 void MouseCallback(GLFWwindow* window, double xPos, double yPos);
+
+// Function that allows to move the camera depending on the events catched from the keyboard and mouse
 void DoMovement();
+
+// Function that allows to render a static model according to an intance from class Model, this function receives as parameters: 
+// a Matrix 4X4 named model, the model's (Matrix 4x4) location from the shader named modelLoc, 
+// the model that is wanted to redender and the shader that is going to be used to render the model 
 void PutModel_static(glm::mat4 model, GLint modelLoc, Model objeto, Shader lightingShader);
+
+// Function that allows us to render all of the windows of our antartic station, this function receives as parameters:
+// a Matrix 4X4 named model, the model's (Matrix 4x4) location from the shader named modelLoc, 
+// the model (in this case we use the model named Ventanas) that is wanted to redender and the shader that is going to be used to render the model 
 void PutGlass(glm::mat4 model, GLint modelLoc, Model objeto, Shader lightingShader);
+
+// Function that allows us to render all of the lamps of our antartic station, in this case it's implemented two pointlights to light up inside of the main room, this function receives as parameters:
+// a Matrix 4X4 named model, the model's (Matrix 4x4) location from the shader named modelLoc, 
+// the model (in this case we use the model named Lamp1 and Lamp2) that is wanted to redender, the shader that is going to be used to render the model 
+// and finally the index of the position declared and saved in the next code lines
 void PutLamps(glm::mat4 model, GLint modelLoc, Model objeto, Shader lightingShader, int pointLightPosition);
+
+// Function that allows us to render a fake bear to scare penguins away from the main entrance, this bear is going to be rotating about its y-axis, this function receives as parameters:
+// a Matrix 4X4 named model, the model's (Matrix 4x4) location from the shader named modelLoc, 
+// two models (the bear and its base), the shader that is going to be used to render the model 
+// and finally the position were is wanted to be rendered our fake Bear
 void PutPolarBear(glm::mat4 model, GLint modelLoc, Model Oso, Model baseOso, Shader lightingShader, glm::vec3 pos);
+
+// Function that allows us to render and implement a simple animation coded from the shaders anim and anim2 this function receives as parameters:
+// a Matrix 4X4 named model, the model's (Matrix 4x4) location from the shader named modelLoc, 
+// two models (the bear and its base) and the shader that is going to be used to render the model
+// note: inside of this function it's implemented a time given from the function glfwGetTime()
+// and send its value to the shaders anim o anim2 dipending of the requirements of the model that is wanted to render
 void PutModel_animated(glm::mat4 model, GLint modelLoc, Model objeto, Shader Anim);
 
 // Window dimensions
@@ -47,21 +77,14 @@ GLfloat lastX = WIDTH / 2.0;
 GLfloat lastY = HEIGHT / 2.0;
 bool keys[1024];
 bool firstMouse = true;
-// Light attributes
-glm::vec3 lightPos(10.00, 10.00f, -0.12387f);
-glm::vec3 lightDir(-0.2f, -1.0f, -0.3f);
-bool active;
 
 // Positions of the point lights
 glm::vec3 pointLightPositions[] = {
-	glm::vec3(3.98986,7.5499,0.32613),    // lampara 1
-	glm::vec3(18.9702,7.5499,0.32613),    // lampara 2 
+	glm::vec3(3.98986,7.5499,0.32613),    // lamp 1
+	glm::vec3(18.9702,7.5499,0.32613),    // lamp 2 
 };
-//glm::vec3 pointLightPositions[] = {
-//	glm::vec3(0.0f),    // lampara 1
-//	glm::vec3(1.0f,10.0f,1.0f)    // lampara 2 
-//};
 
+// vertices of the model that allows to render triangles so that the object from the class object is going to be render
 float vertices[] = {
 	 -0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
 		0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,
@@ -106,6 +129,7 @@ float vertices[] = {
 	   -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f
 };
 
+// Vertices that allows to render triangles and in turn the cube where is implemented the images that make up the skybox of the scene
 GLfloat skyboxVertices[] = {
 	// Positions
 	-1.0f,  1.0f, -1.0f,
@@ -151,7 +175,7 @@ GLfloat skyboxVertices[] = {
 	1.0f, -1.0f,  1.0f
 };
 
-
+// indices that allows to use the EBO (Element buffer object) so that it is rendered triangles in such way that make up well the skybox of the scene
 GLuint indices[] =
 {  // Note that we start from 0!
 	0,1,2,3,
@@ -179,11 +203,6 @@ glm::vec3 cubePositions[] = {
 	glm::vec3(-1.3f,  1.0f, -1.5f)
 };
 
-glm::vec3 Light0 = glm::vec3(0);
-glm::vec3 Light1 = glm::vec3(0);
-glm::vec3 Light2 = glm::vec3(0);
-glm::vec3 Light3 = glm::vec3(0);
-
 // Deltatime
 GLfloat deltaTime = 0.0f;	// Time between current frame and last frame
 GLfloat lastFrame = 0.0f;  	// Time of last frame
@@ -192,13 +211,7 @@ int main()
 {
 	// Init GLFW
 	glfwInit();
-	// Set all the required options for GLFW
-	/*glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);*/
-
+	
 	// Create a GLFWwindow object that we can use for GLFW's functions
 	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Proyecto Final", nullptr, nullptr);
 
@@ -218,8 +231,6 @@ int main()
 	glfwSetKeyCallback(window, KeyCallback);
 	glfwSetCursorPosCallback(window, MouseCallback);
 
-	// GLFW Options
-	//glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
 	// Set this to true so GLEW knows to use a modern approach to retrieving function pointers and extensions
 	glewExperimental = GL_TRUE;
@@ -235,47 +246,49 @@ int main()
 
 
 	//#### Shaders ####
+	// Shaders that allows to render lights and models illuminated objects
 	Shader lightingShader("Shaders/lighting.vs", "Shaders/lighting.frag");
 	Shader lampShader("Shaders/lamp.vs", "Shaders/lamp.frag");
+	// Shaders that allows to render animation in real time by this shaders
 	Shader Anim("Shaders/anim.vs", "Shaders/anim.frag");
 	Shader Anim2("Shaders/anim2.vs", "Shaders/anim2.frag");
+	// Shader that allows to render the scene skybox
 	Shader SkyBoxshader("Shaders/SkyBox.vs", "Shaders/SkyBox.frag");
 
-	//#### Modelos #####
-	// Edificio
+	//#### Models #####
+	// Building
 	Model Edificio((char*)"Models/Escena/edificio.obj");
-
-	 //Exterior
-	Model Suelo((char*)"Models/Escena/suelo.obj");
-	Model Mar((char*)"Models/Escena/Mar.obj"); // animacion
-	Model Estanques((char*)"Models/Escena/Estanques.obj"); // animacion
-	Model icebergs((char*)"Models/Escena/icebergs.obj"); // animacion
-	//Model penguin((char*)"Models/Escena/Penguin/p1.obj"); // animacion compleja
-	//Model penguin1((char*)"Models/Escena/Penguin/p2.obj"); // animacion compleja
-
-
-	// Interior
-	Model PlantaEnergia((char*)"Models/Escena/PlantaEnergia/plantaEnergia.obj"); //
-	Model TanqueOxigeno((char*)"Models/Escena/TanqueOxigeno/tanqueOxigeno.obj"); //
-	Model Armario((char*)"Models/Escena/Interior/Armario.obj"); //
-	Model Tuberia((char*)"Models/Escena/Interior/tuberia.obj"); //
-	Model Apagadores((char*)"Models/Escena/Instalaciones/apagadores.obj"); //
-	Model Botas((char*)"Models/Escena/Instalaciones/botas.obj"); //
-	Model Botiquines((char*)"Models/Escena/Instalaciones/botequin.obj"); //
-	Model Extinguidores((char*)"Models/Escena/Instalaciones/FireExtinguisher/Extinguidores.obj");
-	Model Martillo((char*)"Models/Escena/Instalaciones/martillo.obj");
-	Model Mesa((char*)"Models/Escena/Instalaciones/mesa.obj");
-	Model Piolets((char*)"Models/Escena/Instalaciones/piolet.obj");
 	Model Ventanas((char*)"Models/Escena/Instalaciones/ventana.obj");
 	Model BaseLamps((char*)"Models/Escena/Instalaciones/baselamps.obj");
 	Model Lamp1((char*)"Models/Escena/Instalaciones/lamp1.obj");
 	Model Lamp2((char*)"Models/Escena/Instalaciones/lamp2.obj");
+
+	 //Exterior
+	Model Suelo((char*)"Models/Escena/suelo.obj");
+	Model Mar((char*)"Models/Escena/Mar.obj"); 
+	Model Estanques((char*)"Models/Escena/Estanques.obj"); 
+	Model icebergs((char*)"Models/Escena/icebergs.obj"); 
 	Model Oso((char*)"Models/Escena/OsoPolar/polar.obj");
 	Model BaseOso((char*)"Models/Escena/BaseOso.obj");
 	
+	// penguins, this intances are from the class Penguin, this class alows us to render penguins animated and use their  two methods that implents animated paths
 	Penguin penguin1(&(lightingShader),glm::vec3(40.0f, -1.0f,0.0f));
 	Penguin penguin2(&(lightingShader),glm::vec3(0.0f, -0.5f,-50.0f));
 
+
+	// Interior
+	Model PlantaEnergia((char*)"Models/Escena/PlantaEnergia/plantaEnergia.obj"); 
+	Model TanqueOxigeno((char*)"Models/Escena/TanqueOxigeno/tanqueOxigeno.obj"); 
+	Model Armario((char*)"Models/Escena/Interior/Armario.obj"); 
+	Model Tuberia((char*)"Models/Escena/Interior/tuberia.obj"); 
+	Model Apagadores((char*)"Models/Escena/Instalaciones/apagadores.obj"); 
+	Model Botas((char*)"Models/Escena/Instalaciones/botas.obj"); 
+	Model Botiquines((char*)"Models/Escena/Instalaciones/botequin.obj"); 
+	Model Extinguidores((char*)"Models/Escena/Instalaciones/FireExtinguisher/Extinguidores.obj");
+	Model Martillo((char*)"Models/Escena/Instalaciones/martillo.obj");
+	Model Mesa((char*)"Models/Escena/Instalaciones/mesa.obj");
+	Model Piolets((char*)"Models/Escena/Instalaciones/piolet.obj");
+	
 	// First, set the container's VAO (and VBO)
 	GLuint VBO, VAO;
 	glGenVertexArrays(1, &VAO);
@@ -305,7 +318,7 @@ int main()
 	glEnableVertexAttribArray(0);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), (GLvoid*)0);
 
-	// Load textures
+	// Load textures for the skybox
 	vector<const GLchar*> faces;
 	faces.push_back("SkyBox/night/right.tga");
 	faces.push_back("SkyBox/night/left.tga");
@@ -339,23 +352,19 @@ int main()
 		glEnable(GL_DEPTH_TEST);
 
 
-
-		//Load Model
-
-
 		// Use cooresponding shader when setting uniforms/drawing objects
 		lightingShader.Use();
 		GLint viewPosLoc = glGetUniformLocation(lightingShader.Program, "viewPos");
 		glUniform3f(viewPosLoc, camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
 
 
-		// Directional light
+		// Directional light, in the scene it is night
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -0.2f, -1.0f, -0.3f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.3f, 0.3f, 0.3f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.3f, 0.3f, 0.3f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 1.0f,1.0f,1.0f);
 
-		// lamparas
+		// lamps
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].position"), pointLightPositions[0].x, pointLightPositions[0].y, pointLightPositions[0].z);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].ambient"), 0.972, 0.956, 0.909);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "pointLights[0].diffuse"), 0.972, 0.956, 0.909);
@@ -374,7 +383,7 @@ int main()
 
 
 		// Set material properties
-		glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 16.0f);
+		glUniform1f(glGetUniformLocation(lightingShader.Program, "material.shininess"), 32.0f);
 
 		// Create camera transformations
 		glm::mat4 view;
@@ -392,8 +401,6 @@ int main()
 
 		glm::mat4 model(1);
 
-
-		//Carga de modelo 
 		view = camera.GetViewMatrix();
 		glUniform4f(glGetUniformLocation(lightingShader.Program, "colorAlpha"), 1.0f,1.0f, 1.0f, 1.0f);
 
@@ -403,7 +410,7 @@ int main()
 		PutModel_static(model,modelLoc,Suelo,lightingShader);
 		PutModel_static(model,modelLoc,Edificio,lightingShader);
 		
-		// objetos del interior
+		// indoor objects
 		PutModel_static(model, modelLoc, PlantaEnergia, lightingShader);
 		PutModel_static(model, modelLoc, TanqueOxigeno, lightingShader);
 		PutModel_static(model, modelLoc, Armario, lightingShader);
@@ -418,20 +425,21 @@ int main()
 		PutModel_static(model, modelLoc, BaseLamps, lightingShader);
 		PutPolarBear(model,modelLoc, Oso, BaseOso, lightingShader, glm::vec3(30.0f,-1.0f,10.0f));
 
-		// Ventanas
+		// Windows
 		PutGlass(model, modelLoc, Ventanas, lightingShader);
 		
-		// iluminacion
+		// ilumination
 		PutLamps(model, modelLoc, Lamp1, lightingShader, 0);
 		PutLamps(model, modelLoc, Lamp2, lightingShader, 1);
 
+		// Penguins
 		penguin1.PenguinAnimation(modelLoc,40.0f);
 		penguin2.PenguinAnimation(modelLoc);
 
 
 		glBindVertexArray(0);
 
-		// objetos animados del exterior
+		// outside animated objects
 		Anim.Use();
 
 		modelLoc = glGetUniformLocation(Anim.Program, "model");
@@ -442,6 +450,7 @@ int main()
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
+		// it is rendered with animation the Sea and the ponds, simulating the proper movement of water
 		PutModel_animated(model, modelLoc, Mar, Anim);
 		PutModel_animated(model, modelLoc, Estanques, Anim);
 
@@ -457,6 +466,7 @@ int main()
 		glUniformMatrix4fv(projLoc, 1, GL_FALSE, glm::value_ptr(projection));
 		glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 
+		// it is rendered with animation the icebergs simulating their floating 
 		PutModel_animated(model, modelLoc, icebergs, Anim2);
 
 		glBindVertexArray(0);
@@ -464,7 +474,7 @@ int main()
 	
 
 
-		// Also draw the lamp object, again binding the appropriate shader
+		// lamp object, again binding the appropriate shader
 		lampShader.Use();
 		// Get location objects for the matrices on the lamp shader (these could be different on a different shader)
 		modelLoc = glGetUniformLocation(lampShader.Program, "model");
@@ -556,7 +566,7 @@ void PutPolarBear(glm::mat4 model, GLint modelLoc, Model Oso, Model baseOso, Sha
 }
 
 void PutGlass(glm::mat4 model, GLint modelLoc, Model objeto, Shader lightingShader){
-	glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
+	glEnable(GL_BLEND);//Activa la funcionalidad para trabajar el canal alfa
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	model = glm::mat4(1);
 	model = glm::scale(model, glm::vec3(0.15f));
@@ -569,7 +579,7 @@ void PutGlass(glm::mat4 model, GLint modelLoc, Model objeto, Shader lightingShad
 }
 
 void PutLamps(glm::mat4 model, GLint modelLoc, Model objeto, Shader lightingShader, int pointLightPosition){
-	glEnable(GL_BLEND);//Avtiva la funcionalidad para trabajar el canal alfa
+	glEnable(GL_BLEND);//Activa la funcionalidad para trabajar el canal alfa
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	model = glm::mat4(1);
 	model = glm::translate(model, pointLightPositions[pointLightPosition]);
