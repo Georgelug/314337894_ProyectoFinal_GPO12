@@ -33,8 +33,11 @@ public:
 	bool estadoAlaDer;
 	bool faseRecorrido;
 	bool faseRecorrido1;
+	bool faseRecorrido2;
+	bool faseRecorrido3;
 	float rotRecorrido;
 	float theta;
+	float t;
 	
 	Penguin(Shader *lightingShader, glm::vec3 initialPosition){
 
@@ -46,14 +49,20 @@ public:
 		this->rotAlaIzq = -9.0f;
 		this->rotAlaDer = 0.0f;
 		this->rotCola = 9.0f;
+		
 		this->estadoBody = true;
 		this->estadoCola = true;
 		this->estadoAlaIzq= true;
 		this->estadoAlaDer= true;
+		
 		this->faseRecorrido = true;
 		this->faseRecorrido1 = false;
+		this->faseRecorrido2 = false;
+		this->faseRecorrido3 = false;
+
 		this->rotRecorrido = 0.0f;
 		this->theta = 0.0f;
+		this->t = 0.03f;
 
 		penguinCuerpo = new Model((char*)"Models/Escena/Penguin/penguinCuerpo.obj");
 		penguinAlaDer = new Model((char*)"Models/Escena/Penguin/penguinAlaDer.obj");
@@ -61,17 +70,17 @@ public:
 		penguinCola = new Model((char*)"Models/Escena/Penguin/penguinColaobj.obj");
 	}
 
-	void PenguinAnimation(GLint modelLoc,float distance = 20.0f) {
-		rotationDinamic();
-		PutPenguin(modelLoc);
-		recorrido(distance/2.0);
-	}
-	
 	void PenguinAnimation(GLint modelLoc) {
 		rotationDinamic();
 		PutPenguin(modelLoc);
 		recorrido();
 	}
+	void PenguinAnimation(GLint modelLoc,float distance) {
+		rotationDinamic();
+		PutPenguin(modelLoc);
+		recorrido(distance/2.0);
+	}
+	
 
 private:
 	void PutPenguin(GLint modelLoc){
@@ -199,13 +208,55 @@ private:
 	}
 	
 	void recorrido() {
-		switch (this->faseRecorrido1){
-			case 0:
+		if (this->faseRecorrido) {
+
+			this->position.z -= this->t;
+			this->position.x += this->t;
+			this->rotRecorrido = 45.0f;
+
+			if (this->position.z < this->initialPosition.z/2) {
 				
-				break;
-			case 1:
-				
-				break;
+				this->faseRecorrido = false;
+				this->faseRecorrido1 = true;
+			}
+		}
+
+		if (this->faseRecorrido1) {
+			
+			this->position.z -= this->t;
+			this->position.x -= this->t;
+			this->rotRecorrido =135.0f;
+
+			if (this->position.x < 0) {
+
+				this->faseRecorrido1 = false;
+				this->faseRecorrido2 = true;
+			}
+		}
+		
+		if (this->faseRecorrido2) {
+
+			this->position.z += this->t;
+			this->position.x -= this->t;
+			this->rotRecorrido = 225.0f;
+
+			if (this->position.z > this->initialPosition.z / 2) {
+
+				this->faseRecorrido2 = false;
+				this->faseRecorrido3 = true;
+			}
+		}
+		
+		if (this->faseRecorrido3) {
+
+			this->position.z += this->t;
+			this->position.x += this->t;
+			this->rotRecorrido = -45.0f;
+
+			if (this->position.x > 0) {
+				this->faseRecorrido3 = false;
+				this->faseRecorrido = true;
+			}
 		}
 	}
 

@@ -263,7 +263,7 @@ int main()
 	Model Botas((char*)"Models/Escena/Instalaciones/botas.obj"); //
 	Model Botiquines((char*)"Models/Escena/Instalaciones/botequin.obj"); //
 	Model Extinguidores((char*)"Models/Escena/Instalaciones/FireExtinguisher/Extinguidores.obj");
-	//Model Martillo((char*)"Models/Escena/Instalaciones/martillo.obj");
+	Model Martillo((char*)"Models/Escena/Instalaciones/martillo.obj");
 	Model Mesa((char*)"Models/Escena/Instalaciones/mesa.obj");
 	Model Piolets((char*)"Models/Escena/Instalaciones/piolet.obj");
 	Model Ventanas((char*)"Models/Escena/Instalaciones/ventana.obj");
@@ -274,6 +274,7 @@ int main()
 	Model BaseOso((char*)"Models/Escena/BaseOso.obj");
 	
 	Penguin penguin1(&(lightingShader),glm::vec3(40.0f, -1.0f,0.0f));
+	Penguin penguin2(&(lightingShader),glm::vec3(0.0f, -0.5f,-50.0f));
 
 	// First, set the container's VAO (and VBO)
 	GLuint VBO, VAO;
@@ -350,8 +351,8 @@ int main()
 
 		// Directional light
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.direction"), -0.2f, -1.0f, -0.3f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.2f, 0.2f, 0.2f);
-		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.2f, 0.2f, 0.2f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.ambient"), 0.3f, 0.3f, 0.3f);
+		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.diffuse"), 0.3f, 0.3f, 0.3f);
 		glUniform3f(glGetUniformLocation(lightingShader.Program, "dirLight.specular"), 1.0f,1.0f,1.0f);
 
 		// lamparas
@@ -411,7 +412,7 @@ int main()
 		PutModel_static(model, modelLoc, Botas, lightingShader);
 		PutModel_static(model, modelLoc, Botiquines, lightingShader);
 		PutModel_static(model, modelLoc, Extinguidores, lightingShader);
-		//PutModel_static(model, modelLoc, Martillo, lightingShader);
+		PutModel_static(model, modelLoc, Martillo, lightingShader);
 		PutModel_static(model, modelLoc, Mesa, lightingShader);
 		PutModel_static(model, modelLoc, Piolets, lightingShader);
 		PutModel_static(model, modelLoc, BaseLamps, lightingShader);
@@ -425,6 +426,7 @@ int main()
 		PutLamps(model, modelLoc, Lamp2, lightingShader, 1);
 
 		penguin1.PenguinAnimation(modelLoc,40.0f);
+		penguin2.PenguinAnimation(modelLoc);
 
 
 		glBindVertexArray(0);
