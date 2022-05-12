@@ -43,6 +43,11 @@ void DoMovement();
 // the model that is wanted to redender and the shader that is going to be used to render the model 
 void PutModel_static(glm::mat4 model, GLint modelLoc, Model objeto, Shader lightingShader);
 
+// Function that allows to render a seal according to an intance from class Model, this function receives as parameters: 
+// a Matrix 4X4 named model, the model's (Matrix 4x4) location from the shader named modelLoc, 
+// the model named Foca that is wanted to redender and the shader that is going to be used to render the model 
+void PutFoca(glm::mat4 model, GLint modelLoc, Model objeto, Shader lightingShader);
+
 // Function that allows us to render all of the windows of our antartic station, this function receives as parameters:
 // a Matrix 4X4 named model, the model's (Matrix 4x4) location from the shader named modelLoc, 
 // the model (in this case we use the model named Ventanas) that is wanted to redender and the shader that is going to be used to render the model 
@@ -268,6 +273,7 @@ int main()
 	Model Mar((char*)"Models/Escena/Mar.obj"); 
 	Model Estanques((char*)"Models/Escena/Estanques.obj"); 
 	Model icebergs((char*)"Models/Escena/icebergs.obj"); 
+	Model Focas((char*)"Models/Escena/Foca/Focas.obj");
 	Model Oso((char*)"Models/Escena/OsoPolar/polar.obj");
 	Model BaseOso((char*)"Models/Escena/BaseOso.obj");
 	
@@ -423,6 +429,7 @@ int main()
 		PutModel_static(model, modelLoc, Mesa, lightingShader);
 		PutModel_static(model, modelLoc, Piolets, lightingShader);
 		PutModel_static(model, modelLoc, BaseLamps, lightingShader);
+		PutFoca(model, modelLoc, Focas, lightingShader);
 		PutPolarBear(model,modelLoc, Oso, BaseOso, lightingShader, glm::vec3(30.0f,-1.0f,10.0f));
 
 		// Windows
@@ -539,6 +546,13 @@ void PutModel_static(glm::mat4 model, GLint modelLoc, Model objeto, Shader light
 	glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
 	objeto.Draw(lightingShader);
 }
+void PutFoca(glm::mat4 model, GLint modelLoc, Model objeto, Shader lightingShader) {
+	model = glm::mat4(1);
+	model = glm::translate(model, glm::vec3(90.0f,-2.0f,80.0f));
+	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+	glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
+	objeto.Draw(lightingShader);
+}
 void PutModel_animated(glm::mat4 model, GLint modelLoc, Model objeto, Shader Anim) {
 	model = glm::mat4(1);
 	model = glm::scale(model, glm::vec3(0.15f));
@@ -554,7 +568,6 @@ void PutPolarBear(glm::mat4 model, GLint modelLoc, Model Oso, Model baseOso, Sha
 	glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
 	glUniform1i(glGetUniformLocation(lightingShader.Program, "activaTransparencia"), 0);
 	baseOso.Draw(lightingShader);
-
 	// Oso polar
 	model = glm::mat4(1);
 	model = glm::translate(model, pos);
