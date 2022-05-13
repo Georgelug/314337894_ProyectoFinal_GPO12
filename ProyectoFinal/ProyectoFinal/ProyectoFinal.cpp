@@ -26,6 +26,7 @@
 #include "Model.h"
 #include "Texture.h"
 #include "Penguin.h"
+#include "Albatros.h"
 
 // Function prototypes
 
@@ -280,6 +281,14 @@ int main()
 	// penguins, this intances are from the class Penguin, this class alows us to render penguins animated and use their  two methods that implents animated paths
 	Penguin penguin1(&(lightingShader),glm::vec3(40.0f, -1.0f,0.0f));
 	Penguin penguin2(&(lightingShader),glm::vec3(0.0f, -0.5f,-50.0f));
+	
+	// albatros, this intances are from the class Albatros, this class alows us to render albatros animated and use their methods that implents animated paths
+	Albatros albatros1(&(lightingShader), glm::vec3(20.0f, 20.0f, 0.0f));
+	Albatros albatros2(&(lightingShader), glm::vec3(10.0f, 10.0f, 0.0f));
+	Albatros albatros3(&(lightingShader), glm::vec3(-20.0f, 15.0f, 0.0f));
+	Albatros albatros4(&(lightingShader), glm::vec3(30.0f, 15.0f, 0.0f));
+	Albatros albatros5(&(lightingShader), glm::vec3(35.0f, 15.0f, 0.0f));
+	Albatros albatros6(&(lightingShader), glm::vec3(25.0f, 15.0f, 0.0f));
 
 
 	// Interior
@@ -312,7 +321,7 @@ int main()
 	// Set texture units
 	lightingShader.Use();
 	glUniform1i(glGetUniformLocation(lightingShader.Program, "material.diffuse"), 0);
-	//glUniform1i(glGetUniformLocation(lightingShader.Program, "material.specular"), 1);
+	glUniform1i(glGetUniformLocation(lightingShader.Program, "material.specular"), 1);
 
 	//SkyBox
 	GLuint skyboxVBO, skyboxVAO;
@@ -443,6 +452,12 @@ int main()
 		penguin1.PenguinAnimation(modelLoc,40.0f);
 		penguin2.PenguinAnimation(modelLoc);
 
+		albatros1.AlbatrosAnimation(modelLoc,40.0f);
+		albatros2.AlbatrosAnimation(modelLoc,20.0f);
+		albatros3.AlbatrosAnimation(modelLoc,10.0f);
+		albatros4.AlbatrosAnimation(modelLoc,15.0f);
+		albatros5.AlbatrosAnimation(modelLoc,20.0f);
+		albatros6.AlbatrosAnimation(modelLoc,25.0f);
 
 		glBindVertexArray(0);
 
